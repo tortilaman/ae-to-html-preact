@@ -10,7 +10,7 @@ export default class NewAnim extends Component {
 			title: "",
 			file: null
 		};
-		this.db = localDB.localDB;
+		this.animDb = localDB.localDB;
 		this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -24,7 +24,6 @@ export default class NewAnim extends Component {
 	}
 
 	handleSubmit(event) {
-    // alert(this.state.title + ' has been uploaded');
 		event.preventDefault();
 		var nonJson = false;
 		var fileInput = document.getElementById('fileUpload');
@@ -42,7 +41,7 @@ export default class NewAnim extends Component {
 			    }
 			  }
 				//Get any existing document
-				var existingDoc = this.db.get(fileData._id).catch(err => {
+				var existingDoc = this.animDb.get(fileData._id).catch(err => {
 					//If it's a new file, return the new file instead of the old one.
 					if(err.name === 'not_found') {
 						return fileData;
@@ -51,7 +50,7 @@ export default class NewAnim extends Component {
 					}
 				}).then(doc => {
 						doc.atachments = fileData.attachments;
-						return this.db.put(doc);
+						return this.animDb.put(doc);
 				}).then(() => {
 				  //Success
 				}).catch(err => {
