@@ -72,6 +72,7 @@
     "less-loader": "^4.0.3",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
+    "node-sass": "^4.5.3",
     "offline-plugin": "^4.7.0",
     "postcss-loader": "^2.0.3",
     "pouchdb-server": "^2.3.7",
@@ -79,6 +80,7 @@
     "raw-loader": "^0.5.1",
     "regenerator-runtime": "^0.10.3",
     "replace-bundle-webpack-plugin": "^1.0.0",
+    "sass-loader": "^6.0.5",
     "script-ext-html-webpack-plugin": "^1.3.4",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.9.0",
@@ -98,7 +100,8 @@
     "promise-polyfill": "^6.0.2",
     "proptypes": "^1.0.0",
     "react-bodymovin": "^1.0.4",
-    "serve": "^5.1.4"
+    "serve": "^5.1.4",
+    "simple-react-modal": "^0.5.1"
   },
   "main": "webpack.config.babel.js",
   "directories": {

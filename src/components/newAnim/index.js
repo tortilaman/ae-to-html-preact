@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 // let PouchDB = require('pouchdb');
 
-import style from './style.less';
+import style from './style.scss';
 
 export default class NewAnim extends Component {
 	constructor(props) {
@@ -55,6 +55,7 @@ export default class NewAnim extends Component {
 					return this.animDb.put(doc);
 				}).then(() => {
 					//Success
+					this.props.close();
 					return console.log("Successfully added document");
 				}).catch(err => {
 					//New unexpected error, not 404 or 409
@@ -68,14 +69,15 @@ export default class NewAnim extends Component {
 	render() {
 		return (
 			<div class={style.home}>
+				<h1>New Animation</h1>
 				<form onSubmit={this.handleSubmit} >
-					<label for="fileTitle">Title:
+					<label for="fileTitle" class={style.input}>Title:
 						<input type="text" value={this.state.title} onChange={this.handleInputChange} name="title" id="fileTitle" />
-					</label><br />
-					<label for="fileUpload">File:
+					</label>
+					<label for="fileUpload" class={style.input}>File:
 						<input type="file" value={this.state.file} onChange={this.handleInputChange} name="file" id="fileUpload" />
-					</label><br />
-					<input type="submit" value="submit" onSubmit={this.handleSubmit} />
+					</label>
+					<input type="submit" value="submit" onSubmit={this.handleSubmit} class={style.input}/>
 				</form>
 			</div>
 		);

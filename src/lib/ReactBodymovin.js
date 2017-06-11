@@ -2,30 +2,37 @@ import { h, Component } from 'preact';
 const bodymovin = require('bodymovin/build/player/bodymovin');
 
 class ReactBodymovin extends Component {
-  componentDidMount () {
-    const options = Object.assign({}, this.props.options);
-    options.wrapper = this.wrapper;
-    options.renderer = 'svg';
-    this.animation = bodymovin.loadAnimation(options);
-  }
+	componentDidMount () {
+		const options = Object.assign({}, this.props.options);
+		options.wrapper = this.wrapper;
+		options.renderer = 'svg';
 
-  componentWillUnmount () {
-    this.animation.destroy();
-  }
+		this.anim = bodymovin.loadAnimation(options);
+	}
 
-  shouldComponentUpdate () {
-    return false;
-  }
+	componentWillUnmount () {
+		this.anim.destroy();
+	}
 
-  render () {
-    const storeWrapper = (el) => {
-      this.wrapper = el;
-    };
+	shouldComponentUpdate () {
+		return false;
+	}
 
-    return (
-      <div className='react-bodymovin-container' ref={storeWrapper} />
-    )
-  }
+	getAnim () {
+		return this.anim;
+	}
+
+	render () {
+		const storeWrapper = (el) => {
+			this.wrapper = el;
+		};
+
+		// this.props.animation ? this.extAnim.play() : this.animation.play();
+
+		return (
+			<div className='react-bodymovin-container' ref={storeWrapper} />
+		);
+	}
 }
 
-module.exports = ReactBodymovin
+module.exports = ReactBodymovin;

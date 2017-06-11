@@ -1,4 +1,4 @@
-.fill() {
+@mixin fill() {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -6,7 +6,7 @@
 	height: 100%;
 }
 
-.scroll() {
+@mixin scroll() {
 	overflow: auto;
 	overflow-scrolling: touch;
 

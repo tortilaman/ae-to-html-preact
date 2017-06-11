@@ -1,7 +1,8 @@
 import { h, Component } from 'preact';
+import Modal from 'simple-react-modal';
 let PouchDB = require('pouchdb');
 
-import style from './style.less';
+import style from './style.scss';
 import NewAnim from '../newAnim';
 import Animation from '../animation';
 
@@ -11,9 +12,11 @@ export default class Home extends Component {
 	constructor() {
 		super();
 		this.db = new PouchDB('files');
+		this.animations = [];
 		this.state = {
 			db: "",
-			files: []
+			files: [],
+			show: false
 		};
 
 		this.db.allDocs({include_docs: true, attachments: true, binary: true}).then(result => {
@@ -27,6 +30,18 @@ export default class Home extends Component {
 		}).catch(console.log.bind(console));
 
 		this.addFile = this.addFile.bind(this);
+		this.show = this.show.bind(this);
+		this.hide = this.hide.bind(this);
+	}
+
+	show() {
+		console.log("Show");
+		this.setState({show: true});
+	}
+
+	hide() {
+		console.log("Hide");
+		this.setState({show: false});
 	}
 
 	/**
@@ -101,48 +116,29 @@ export default class Home extends Component {
 	}
 
 	render() {
-
-
-		/*
-			Changes adds other garbage, it's more work don't use it.
-		 */
-		// this.changes = this.db.changes({
-		// 	since: 'now',
-		// 	live: true,
-		// 	include_docs: true,
-		// 	attachments: true,
-		// 	binary: true
-		// }).on('change', change => {
-		// 	console.log("There have been changes to the database");
-		// 	console.log(change);
-		// 	if (Array.isArray(change)) {
-		// 		//	Need to process multiple items
-		// 		//	This hasn't been tested...
-		// 		return Promise.all(change.map(item => {
-		// 			return this.readFile(item);
-		// 		})).then(arrayOfResults => {
-		// 			return this.setData(arrayOfResults);
-		// 		});
-		// 	} else {
-		// 		return this.setState((prevState) => {
-		// 			prevState.files.push(change);
-		// 		});
-		// 	}
-		// }).on('complete', info => {
-		// 	// changes() was canceled
-		// }).on('error', (err) => {
-		// 	console.log(err);
-		// });
-
 		return (
 			<div class={style.home}>
 				<h1>Animations</h1>
-				<NewAnim localDB={this.db} addFile={this.addFile} />
+				<input type="button" value="Add Animation" onClick={this.show} />
+				<Modal
+					containerClassName={style.newAnimModal}
+					closeOnOuterClick={true}
+					show={this.state.show}
+					onClose={this.hide}
+				>
+					<NewAnim
+						localDB={this.db}
+						addFile={this.addFile}
+						close={this.hide}
+					/>
+				</Modal>
 				<table>
 					{
 						this.state.files ? (
-							this.state.files.map( object => (
-								<Animation jsData={object} />
+							this.state.files.map(object => (
+								<Animation
+									jsData={object}
+								/>
 							))
 						) : null
 					}
